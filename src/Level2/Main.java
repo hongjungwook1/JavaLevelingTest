@@ -23,6 +23,8 @@ public class Main {
         System.out.println(member1);
         System.out.println("--------업데이트 끝-------");
 
+        System.out.println("--------Member1 삭제-------");
+        memberRepository.delete(member1.getId());
 
         System.out.println("--------전체 조회-------");
         System.out.println(memberRepository.listRead());
