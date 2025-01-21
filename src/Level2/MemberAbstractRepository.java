@@ -17,4 +17,10 @@ public abstract class MemberAbstractRepository implements IRepository {
         return Optional.ofNullable(memberMap.get(id));
     }
 
+    public Map<Integer, Member> current() {
+        memberMap.forEach((key , value) -> {
+            System.out.println("id : " + key + " : " + value);
+        });
+        return memberMap;
+    }
 }

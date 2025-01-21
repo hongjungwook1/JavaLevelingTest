@@ -11,16 +11,19 @@ public class MemberRepository extends MemberAbstractRepository {
         entity.setId(idGenerator());
         entity.setDeleted(false);
         memberMap.put(entity.getId(), entity);
+        current();
         return entity;
     }
     @Override
     public Member read(Integer id) {
+        current();
         return findUserById(id)
                 .orElseThrow(() -> new RuntimeException("Read 불가 ID 값 미 존재  " + id));
     }
 
     @Override
     public List<Member> listRead() {
+        current();
         return memberMap.values()
                 .stream()
                 .filter(member -> !member.isDeleted())
@@ -29,6 +32,7 @@ public class MemberRepository extends MemberAbstractRepository {
 
     @Override
     public Member update(Integer id, Member entity) {
+        current();
         findUserById(id)
             .orElseThrow(() -> new RuntimeException("Update 불가 ID 값 미 존재 ID 값 :  " + id));
         entity.setId(id);
@@ -42,6 +46,7 @@ public class MemberRepository extends MemberAbstractRepository {
         Member member = findUserById(id)
                 .orElseThrow(()-> new RuntimeException("생성 된 객체 X"));
         member.setDeleted(true);
+        current();
     }
 
 //    delete 메소드

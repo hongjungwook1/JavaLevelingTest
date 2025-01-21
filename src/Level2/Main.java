@@ -10,9 +10,12 @@ public class Main {
         Member member3 = new Member("Park",38,"Park@naver.com");
 
         System.out.println("--------생성-------");
-        System.out.println(memberRepository.create(member1));
-        System.out.println(memberRepository.create(member2));
-        System.out.println(memberRepository.create(member3));
+        memberRepository.create(member1);
+        System.out.println();
+        memberRepository.create(member2);
+        System.out.println();
+        memberRepository.create(member3);
+        System.out.println();
         System.out.println("--------생성 끝-------");
         System.out.println();
 
@@ -20,7 +23,6 @@ public class Main {
         member1.setName("Hong");
         member1.setEmail("Hong@naver.com");
         memberRepository.update(member1.getId() , member1);
-        System.out.println(member1);
         System.out.println("--------업데이트 끝-------");
 
         System.out.println("--------Member1 삭제-------");
