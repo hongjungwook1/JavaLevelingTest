@@ -5,7 +5,7 @@ import java.util.Optional;
 public class Human {
     private Integer id;
     private String name;
-    private boolean isDeleted;
+    private boolean isDeleted = false;
 
     public Human(String name ) {
         this.name = name;

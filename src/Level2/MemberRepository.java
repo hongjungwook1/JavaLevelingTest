@@ -1,29 +1,27 @@
 package Level2;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class MemberRepository extends MemberAbstractRepository {
 
     @Override
     public Member create(Member entity) {
-        entity.setId(idGenerator());
-        entity.setDeleted(false);
-        memberMap.put(entity.getId(), entity);
+        int idValue = idGenerator();
+        entity.setId(idValue);
+        memberMap.put(idValue , entity);
         current();
+        System.out.println();
         return entity;
     }
     @Override
     public Member read(Integer id) {
-        current();
         return findUserById(id)
-                .orElseThrow(() -> new RuntimeException("Read 불가 ID 값 미 존재  " + id));
+                .filter(member -> !member.isDeleted())
+                .orElseThrow(() -> new RuntimeException("불가 ID 값 미 존재  " + id));
     }
 
     @Override
     public List<Member> listRead() {
-        current();
         return memberMap.values()
                 .stream()
                 .filter(member -> !member.isDeleted())
@@ -32,30 +30,26 @@ public class MemberRepository extends MemberAbstractRepository {
 
     @Override
     public Member update(Integer id, Member entity) {
-        current();
-        findUserById(id)
-            .orElseThrow(() -> new RuntimeException("Update 불가 ID 값 미 존재 ID 값 :  " + id));
+        read(id);
+//       중복 제거
+//        findUserById(id)
+//            .filter(member -> !member.isDeleted())
+//            .orElseThrow(() -> new RuntimeException("Update 불가 ID 값 미 존재 ID 값 :  " + id));
         entity.setId(id);
         memberMap.replace(entity.getId() , entity);
+        current();
         return entity;
     }
 
     @Override
     public void delete(Integer id) {
-        //read Method 어떻게 적용시킬지
-        Member member = findUserById(id)
-                .orElseThrow(()-> new RuntimeException("생성 된 객체 X"));
+        Member member = read(id);
+//        중복 제거
+//        Member member = findUserById(id)
+//                .orElseThrow(()-> new RuntimeException("생성 된 객체 X"));
         member.setDeleted(true);
         current();
     }
-
-//    delete 메소드
-//    findUserById(id)
-//        .filter(member1 -> member1.isDeleted())
-//        .orElseThrow(()-> new RuntimeException("생성 된 객체 X"));
-//    memberMap.remove(id);
-
-
 
 }
 

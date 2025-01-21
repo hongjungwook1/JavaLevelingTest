@@ -1,7 +1,5 @@
 package Level2;
 
-import com.sun.tools.jconsole.JConsoleContext;
-
 public class Main {
     public static void main(String[] args) {
         MemberRepository memberRepository = new MemberRepository();
@@ -11,13 +9,9 @@ public class Main {
 
         System.out.println("--------생성-------");
         memberRepository.create(member1);
-        System.out.println();
         memberRepository.create(member2);
-        System.out.println();
         memberRepository.create(member3);
-        System.out.println();
         System.out.println("--------생성 끝-------");
-        System.out.println();
 
         System.out.println("--------업데이트-------");
         member1.setName("Hong");
