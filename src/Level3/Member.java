@@ -10,11 +10,25 @@ public class Member extends Human{
         this.email = email;
     }
 
-    //%s = String
-    //%d = int
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     @Override
     public String toString() {
-        return String.format("%d %s %s %d %s" , getId() , getName() , isDeleted() , age , email);
+        return String.format("Member : id=%d , name=%s , isDeleted=%s , age=%d , email=%s" , getId() , getName() , isDeleted() , age , email);
     }
 
 }

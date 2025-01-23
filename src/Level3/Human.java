@@ -10,23 +10,26 @@ public class Human {
         this.name = name;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public int getId() {
-        return this.id;
+    public Integer getId() {
+        return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public boolean isDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
+    public void activationIsDeleted() {
+        isDeleted = true;
+    }
+    public void inActivationIsDeleted() {
+        isDeleted = false;
     }
 }
