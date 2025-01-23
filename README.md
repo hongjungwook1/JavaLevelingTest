@@ -51,4 +51,53 @@
     - `update` : 존재하지 않는 아이디에 대해 업데이트 시도하면 예외 발생
     - `delete` : `read` 와 `Optional.orElse Throw` 통해 삭제할 아이템 미존재 시 예외 발생
   - 위 메서드 4개 모두에서 함수 호출 마지막에 혹은 값을 반환하기 전에 current 메서드 호출 필수
- 
+
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+레벨 3 과제 : Generic 활용한 Abstract Class 와 Interface 조합 활용
+
+- Human 클래스 만들기 (추가 요구사항)
+  - 3개 필드 : `id`, `name`, `isDeleted` + 생성자
+- Member 클래스 만들기 ← Human 을 상속받는다
+  - 2개 필드 : `age`, `email` + 생성자
+- IRepository (제네릭 사용) 인터페이스 만들기
+  - 4개 메서드 : `create`, `read`, `update`, `delete`
+
+- AbstractRepository (제네릭 사용) 추상 클래스 만들기
+  - Map 필드 추가
+  - idGenerator 메서드를 만들어 추가될때마다 ID 가 하나씩 늘어나도록 구현
+  - 현재 Map 에 담긴 데이터를 모두 보여주는 current 메서드 생성
+
+- MemberRepository 클래스 만들기 ← AbstractRepository 을 상속받는다
+  - AbstractRepository 의 Map 에 접근 가능해야함 (접근제어자)
+  - 앞선 IRepository 인터페이스의 메서드 4개 모두 구현
+    - `create`
+    - `read` : Optional 을 활용
+      - 단일 조회의 경우 : 존재하지 않는 ID 에 대해 `Optional.orElse Throw` 통해 예외 발생
+        - `isDeleted` 값이 `true` 라면 존재하지 않는것이다. `Optional.filter` 를 활용한다.
+      - 전체 조회의 경우 : `Stream` 을 활용하여 `isDeleted` 값이 `false` 인 경우만 조회
+    - `update` : 존재하지 않는 아이디에 대해 업데이트 시도하면 예외 발생
+    - `delete` : `read` 와 `Optional.orElse Throw` 통해 삭제할 아이템 미존재 시 예외 발생
+  - 위 메서드 4개 모두에서 함수 호출 마지막에 혹은 값을 반환하기 전에 current 메서드 호출 필수
+
+- Vendor 클래스 만들기 ← Human 을 상속받는다
+  - 4개 필드 : `age`, `email`, `address`, `category` + 생성자
+- VendorRepository 클래스 만들기 ← AbstractRepository 을 상속받는다
+  - 모든 요구사항은 위 MemberRepository 와 동일하다.
+
+- MemberResponseDto 클래스 만들기
+  - 4개 필드 : `id`, `name`, `age`, `email` + 생성자
+- DemoApplication - main 메서드에서 MemberRepository 의 5개 메서드 모두 호출
+  - Member 객체 3개 생성 : `create`
+  - 3개 Member 객체 전체 조회 : `read`
+    - `Stream` 을 통해 List 내 모든 Member 를 MemberResponseDto 객체로 변환하여 반환
+  - 1개 삭제 : `delete`
+  - 1개 업데이트 : `update`
+  - 2개 Member 객체 각각 개별 조회 : `read`
+    - `read` 결과인 Member 객체를 `System.out.println` 으로 출력한다.
+- VendorResponseDto 클래스 만들기
+  - 6개 필드 : `id`, `name`, `age`, `email`, `address`, `category` + 생성자
+- DemoApplication - main 메서드에서 VendorRepository 의 5개 메서드 모두 호출
+  - Member 객체 3개 생성 : `create`
+  - 3개 Vendor 객체 전체 조회 : `read`
+    - `Stream` 을 통해 List 내 모든 Vendor 를 VendorResponseDto 객체로 변환하여 반환
